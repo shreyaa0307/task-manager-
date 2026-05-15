@@ -1,4 +1,4 @@
-# ✨ TaskFlow 
+#  TaskFlow 
 
 ![TaskFlow Header](https://via.placeholder.com/1200x400/1e1432/A66CFF?text=TaskFlow+-+Premium+Project+Management)
 
@@ -89,6 +89,3 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ---
 
-## 📄 License
-
-This project is open-source and available under the [MIT License](LICENSE).
