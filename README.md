@@ -1,6 +1,5 @@
 #  TaskFlow 
 
-![TaskFlow Header](https://via.placeholder.com/1200x400/1e1432/A66CFF?text=TaskFlow+-+Premium+Project+Management)
 
 > **Manage projects, assign tasks, track progress, and collaborate with your team — all in one beautiful, ethereal workspace.**
 
