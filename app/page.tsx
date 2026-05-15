@@ -96,7 +96,7 @@ export default function LandingPage() {
 
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 animate-fade-in stagger-2">
             Create projects, assign tasks, track progress, and collaborate
-            with your team — all in one beautiful, powerful workspace.
+            with your team, all in one beautiful, powerful workspace.
           </p>
 
           <div className="flex items-center justify-center gap-4 animate-fade-in stagger-3">

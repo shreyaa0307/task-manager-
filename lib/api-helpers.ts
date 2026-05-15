@@ -5,7 +5,7 @@ import { projectMembers, users } from "@/db/schema";
 import { eq, and } from "drizzle-orm";
 
 /**
- * Require authentication — returns the user (including role) or a 401 Response.
+ * Require authentication, returns the user (including role) or a 401 Response.
  */
 export async function requireAuth() {
   const session = await getSession();

@@ -8,9 +8,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "TaskFlow — Project Management & Task Tracking",
+  title: "TaskFlow, Project Management & Task Tracking",
   description:
-    "Manage projects, assign tasks, track progress, and collaborate with your team — all in one beautiful workspace.",
+    "Manage projects, assign tasks, track progress, and collaborate with your team, all in one beautiful workspace.",
 };
 
 import { ThemeProvider } from "@/components/ThemeProvider";

@@ -145,8 +145,8 @@ export default function ProjectsPage() {
             const progress =
               project.taskCount > 0
                 ? Math.round(
-                    (project.completedTaskCount / project.taskCount) * 100
-                  )
+                  (project.completedTaskCount / project.taskCount) * 100
+                )
                 : 0;
 
             return (
@@ -216,7 +216,7 @@ export default function ProjectsPage() {
         </div>
       )}
 
-      {/* Create Project Modal — Admin only */}
+      {/* Create Project Modal Admin only */}
       <Modal
         open={showCreate}
         onClose={() => setShowCreate(false)}
