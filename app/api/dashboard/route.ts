@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { projects, projectMembers, tasks } from "@/db/schema";
+import { projects, projectMembers, tasks, users } from "@/db/schema";
 import { requireAuth, jsonSuccess } from "@/lib/api-helpers";
 import { eq } from "drizzle-orm";
 
@@ -30,14 +30,15 @@ export async function GET() {
     });
 
     const allTasks = allProjects.flatMap((p) => p.tasks);
-    const allMembers = new Set(
-      allProjects.flatMap((p) => p.members.map((m) => m.userId))
-    );
+    const totalSystemMembers = await db.query.users.findMany({
+      where: eq(users.role, "member"),
+      columns: { id: true }
+    });
 
     const stats = {
       totalProjects: allProjects.length,
       totalTasks: allTasks.length,
-      totalMembers: allMembers.size,
+      totalMembers: totalSystemMembers.length,
       todoTasks: allTasks.filter((t) => t.status === "todo").length,
       inProgressTasks: allTasks.filter((t) => t.status === "in_progress")
         .length,

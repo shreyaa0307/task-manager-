@@ -91,6 +91,7 @@ export default function ProjectDetailPage({
   const [inviteEmail, setInviteEmail] = useState("");
   const [inviting, setInviting] = useState(false);
   const [inviteError, setInviteError] = useState("");
+  const [systemUsers, setSystemUsers] = useState<{id: string, name: string, email: string}[]>([]);
 
   // Filter state
   const [statusFilter, setStatusFilter] = useState("all");
@@ -107,7 +108,18 @@ export default function ProjectDetailPage({
     if (data.success) {
       setCurrentUserId(data.data.id);
       setUserRole(data.data.role);
+      if (data.data.role === "admin") {
+        fetchSystemUsers();
+      }
     }
+  }
+
+  async function fetchSystemUsers() {
+    try {
+      const res = await fetch("/api/team");
+      const data = await res.json();
+      if (data.success) setSystemUsers(data.data);
+    } catch {}
   }
 
   async function fetchProject() {
@@ -677,9 +689,9 @@ export default function ProjectDetailPage({
                 value={taskPriority}
                 onChange={(e) => setTaskPriority(e.target.value)}
               >
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
+                <option value="low" className="bg-background text-foreground">Low</option>
+                <option value="medium" className="bg-background text-foreground">Medium</option>
+                <option value="high" className="bg-background text-foreground">High</option>
               </select>
             </div>
 
@@ -705,9 +717,9 @@ export default function ProjectDetailPage({
               value={taskAssignee}
               onChange={(e) => setTaskAssignee(e.target.value)}
             >
-              <option value="">Unassigned</option>
+              <option value="" className="bg-background text-foreground">Unassigned</option>
               {project.members.map((m) => (
-                <option key={m.userId} value={m.userId}>
+                <option key={m.userId} value={m.userId} className="bg-background text-foreground">
                   {m.user.name} ({m.user.email})
                 </option>
               ))}
@@ -779,9 +791,9 @@ export default function ProjectDetailPage({
                 value={editTaskPriority}
                 onChange={(e) => setEditTaskPriority(e.target.value)}
               >
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
+                <option value="low" className="bg-background text-foreground">Low</option>
+                <option value="medium" className="bg-background text-foreground">Medium</option>
+                <option value="high" className="bg-background text-foreground">High</option>
               </select>
             </div>
 
@@ -807,9 +819,9 @@ export default function ProjectDetailPage({
               value={editTaskAssignee}
               onChange={(e) => setEditTaskAssignee(e.target.value)}
             >
-              <option value="">Unassigned</option>
+              <option value="" className="bg-background text-foreground">Unassigned</option>
               {project.members.map((m) => (
-                <option key={m.userId} value={m.userId}>
+                <option key={m.userId} value={m.userId} className="bg-background text-foreground">
                   {m.user.name} ({m.user.email})
                 </option>
               ))}
@@ -845,19 +857,28 @@ export default function ProjectDetailPage({
             </div>
           )}
 
-          <Input
-            id="invite-email"
-            label="Email Address"
-            type="email"
-            placeholder="member@example.com"
-            value={inviteEmail}
-            onChange={(e) => setInviteEmail(e.target.value)}
-            required
-          />
+          <div className="space-y-1.5">
+            <label className="block text-sm font-medium text-secondary-foreground">
+              Select Team Member
+            </label>
+            <select
+              className="w-full px-4 py-2.5 rounded-xl clay-inset text-foreground focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-primary transition-all duration-200"
+              value={inviteEmail}
+              onChange={(e) => setInviteEmail(e.target.value)}
+              required
+            >
+              <option value="" disabled className="bg-background text-foreground">-- Choose a member --</option>
+              {systemUsers
+                .filter(u => !project?.members.some(m => m.userId === u.id))
+                .map(u => (
+                  <option key={u.id} value={u.email} className="bg-background text-foreground">{u.name} ({u.email})</option>
+                ))
+              }
+            </select>
+          </div>
 
           <p className="text-xs text-muted-foreground">
-            The member&apos;s role (Admin/Member) is determined by the role they
-            selected during signup.
+            Only users who are not already in this project are shown.
           </p>
 
           <div className="flex justify-end gap-3 pt-2">
