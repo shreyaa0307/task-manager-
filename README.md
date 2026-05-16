@@ -1,88 +1,106 @@
-# TaskFlow 
+# Task Manager
 
-> **Manage projects, assign tasks, track progress, and collaborate with your team all in one beautiful, ethereal workspace.**
+> A modern task and team workspace built with Next.js, TypeScript, Tailwind CSS, and Drizzle ORM.
 
-TaskFlow is a modern, full-stack project management application engineered to streamline team productivity. Built with a stunning **Premium Ethereal Glassmorphism** aesthetic, it features beautiful soft glows, translucent floating cards, and animated aurora backgrounds that react dynamically to both light and dark modes.
-
----
-
-##  Core Features
-
-- **Role-Based Access Control (RBAC):** Strict separation between `Admin` and `Member` roles. Only Admins can invite team members and manage workspaces.
-- **Interactive Analytics Dashboard:** Real-time visualizations of project progress and task status distributions using dynamic pie and bar charts.
-- **Granular Task Tracking:** Create projects, assign tasks to specific team members, set priorities, and track deadlines.
-- **Team Management UI:** Admins have a dedicated interface to manage their organization's members, handling onboarding and offboarding securely.
-- **Ethereal Dark/Light Mode:** A fully integrated theme toggler that gracefully transitions the entire pastel color palette and glassmorphism shadows.
-- **Blazing Fast Next.js 16:** Built on the bleeding edge App Router with server actions and instantaneous UI updates.
-
-## 🛠️ Technology Stack
-
-- **Framework:** [Next.js 16](https://nextjs.org/) (App Router & Server Actions)
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS v4 + Custom Glassmorphism UI
-- **Database:** SQLite
-- **ORM:** [Drizzle ORM](https://orm.drizzle.team/)
-- **Visualizations:** [Recharts](https://recharts.org/)
-- **Icons:** [Lucide React](https://lucide.dev/)
+This repository hosts a full-stack project management application for creating projects, assigning tasks, managing team members, and tracking progress with a polished dashboard UI.
 
 ---
 
-## 🎨 UI/UX Aesthetic 
+## Live Demo
 
-This application uses a highly customized **Ethereal Glassmorphism** design system:
-- **Palette:** Soft Lavenders (`#A66CFF`), Cyans (`#8EEBFF`), Pastel Pinks (`#F0ABFC`), and Frosted White.
-- **Backgrounds:** Smooth, fixed aurora-style radial gradients.
-- **Components:** Deep translucent cards with `backdrop-blur(24px)`, eliminating harsh borders and hard shadows.
-- **Typography:** Clean, readable `Inter` font for professional productivity.
+The app is deployed and available at:
+
+<https://task-manager-production-b55e.up.railway.app>
+
+Use this link to access the hosted version directly.
 
 ---
 
-## Local Development Setup
+## Core Features
 
-To run TaskFlow locally, follow these steps:
+- `Admin` and `Member` role-based access
+- Create and manage projects
+- Assign tasks to team members with status tracking
+- Dedicated dashboard and productivity views
+- Team member management from the dashboard
+- Light/Dark theme support
+- Responsive glassmorphism-inspired UI
 
-### 1. Clone the repository
-```bash
-git clone https://github.com/yourusername/task-manager-.git
-cd task-manager-
-```
+---
 
-### 2. Install dependencies
+## Technology Stack
+
+- **Next.js 16** (App Router)
+- **React 19** + **TypeScript**
+- **Tailwind CSS v4**
+- **Drizzle ORM** with **SQLite**
+- **Recharts** for charts
+- **Lucide React** icons
+- **Framer Motion** animations
+- **bcryptjs** for password hashing
+- **next-themes** for theme switching
+
+---
+
+## Development Setup
+
+If you want to run the app locally for development or testing, follow these steps.
+
+### 1. Install dependencies
+
 ```bash
 npm install
 ```
 
-### 3. Environment Variables
-Create a `.env.local` file in the root directory and add the required environment variables:
+### 2. Add environment variables
+
+Create a `.env.local` file in the project root with:
+
 ```env
-# The local SQLite database file
-DATABASE_URL=file:local.db
-
-# Used for encrypting session cookies (generate a random secure string)
-SESSION_SECRET=super_secret_key_change_me_in_production
+DATABASE_URL=file:./dev.db
+SESSION_SECRET=your_secret_key_here
 ```
 
-### 4. Database Setup (Drizzle ORM)
-Push the database schema to your local SQLite file and seed it with initial data (optional):
-```bash
-# Push the schema
-npm run db:push
+### 3. Start the development server
 
-# (Optional) Seed the database
-npm run db:seed
-```
-
-### 5. Start the development server
 ```bash
 npm run dev
 ```
 
-Open [https://task-manager-production-b55e.up.railway.app/] with your browser to see the result.
+Open <http://localhost:3000> in your browser.
+
+> Note: If you only want to use the app, the deployed Railway URL is already available.
 
 ---
 
-## 🔐 Authentication Flow
-- **Sign Up:** The `/signup` route is strictly for **Admins** creating new workspaces.
-- **Member Login:** Members cannot sign up. They must be added by an Admin via the Dashboard's **Team** page. They will log in using the credentials provided by the Admin.
+## Project Structure
+
+- `app/` — Next.js pages and layout routes
+- `components/` — reusable UI components
+- `db/` — database configuration and schema files
+- `lib/` — authentication, session, and API helper utilities
+- `drizzle.config.ts` — Drizzle ORM config
+- `middleware.ts` — request and auth middleware
 
 ---
+
+## Available Scripts
+
+- `npm run dev` — start the development server
+- `npm run build` — build the app for production
+- `npm run start` — start the production server
+- `npm run lint` — run ESLint checks
+
+---
+
+## Notes
+
+- The deployed app is hosted on Railway at the link above.
+- Local setup is optional and only required for development or code changes.
+- Member accounts are usually managed by Admins through the dashboard, rather than by open signup.
+
+---
+
+## License
+
+This project is currently private. Add a license section if you choose to publish it publicly.
