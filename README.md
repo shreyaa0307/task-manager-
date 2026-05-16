@@ -1,7 +1,5 @@
 # TaskFlow 
 
-![TaskFlow Header](https://via.placeholder.com/1200x400/1e1432/A66CFF?text=TaskFlow+-+Premium+Project+Management)
-
 > **Manage projects, assign tasks, track progress, and collaborate with your team all in one beautiful, ethereal workspace.**
 
 TaskFlow is a modern, full-stack project management application engineered to streamline team productivity. Built with a stunning **Premium Ethereal Glassmorphism** aesthetic, it features beautiful soft glows, translucent floating cards, and animated aurora backgrounds that react dynamically to both light and dark modes.
