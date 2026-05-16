@@ -29,6 +29,7 @@ interface User {
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, adminOnly: false },
   { href: "/projects", label: "Projects", icon: FolderKanban, adminOnly: false },
+  { href: "/productivity", label: "Productivity", icon: Zap, adminOnly: false },
   { href: "/team", label: "Team", icon: Users, adminOnly: true },
 ];
 

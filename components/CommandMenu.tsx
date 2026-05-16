@@ -66,6 +66,13 @@ export function CommandMenu() {
               <Users className="h-4 w-4" />
               Team
             </Command.Item>
+            <Command.Item 
+              onSelect={() => { router.push("/productivity"); setOpen(false); }}
+              className="flex items-center gap-2 px-2 py-2 text-sm rounded-md aria-selected:bg-accent aria-selected:text-accent-foreground cursor-pointer"
+            >
+              <Zap className="h-4 w-4" />
+              Productivity
+            </Command.Item>
           </Command.Group>
         </Command.List>
       </Command>

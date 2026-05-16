@@ -97,6 +97,7 @@ export const tasks = sqliteTable("tasks", {
   createdAt: integer("created_at", { mode: "timestamp" })
     .notNull()
     .$defaultFn(() => new Date()),
+  completedAt: integer("completed_at", { mode: "timestamp" }),
 });
 
 export const tasksRelations = relations(tasks, ({ one }) => ({

@@ -89,6 +89,14 @@ export async function PUT(
         : null;
     }
 
+    if (parsed.data.status !== undefined) {
+      if (parsed.data.status === "done" && task.status !== "done") {
+        updateData.completedAt = new Date();
+      } else if (parsed.data.status !== "done" && task.status === "done") {
+        updateData.completedAt = null;
+      }
+    }
+
     await db.update(tasks).set(updateData).where(eq(tasks.id, taskId));
 
     const updated = await db.query.tasks.findFirst({
