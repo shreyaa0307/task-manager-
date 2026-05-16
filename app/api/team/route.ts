@@ -21,6 +21,7 @@ export async function GET() {
       email: true,
       role: true,
       createdAt: true,
+      lastActiveAt: true,
     },
     orderBy: (users, { desc }) => [desc(users.createdAt)],
   });

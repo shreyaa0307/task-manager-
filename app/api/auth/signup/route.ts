@@ -46,6 +46,7 @@ export async function POST(request: Request) {
       email,
       passwordHash,
       role: assignedRole,
+      lastActiveAt: new Date(),
     });
 
     // Create session

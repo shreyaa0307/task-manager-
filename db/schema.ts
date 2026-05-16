@@ -13,6 +13,7 @@ export const users = sqliteTable("users", {
   createdAt: integer("created_at", { mode: "timestamp" })
     .notNull()
     .$defaultFn(() => new Date()),
+  lastActiveAt: integer("last_active_at", { mode: "timestamp" }),
 });
 
 export const usersRelations = relations(users, ({ many }) => ({

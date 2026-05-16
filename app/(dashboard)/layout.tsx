@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState, useEffect, ReactNode } from "react";
+import { useState, useEffect, useCallback, ReactNode } from "react";
 import {
   LayoutDashboard,
   FolderKanban,
@@ -17,6 +17,7 @@ import {
 import Avatar from "@/components/ui/Avatar";
 import Badge from "@/components/ui/Badge";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { CommandMenu } from "@/components/CommandMenu";
 
 interface User {
   id: string;
@@ -41,6 +42,11 @@ export default function DashboardLayout({
   const [user, setUser] = useState<User | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  // Send heartbeat to track active status
+  const sendHeartbeat = useCallback(() => {
+    fetch("/api/auth/heartbeat", { method: "POST" }).catch(() => {});
+  }, []);
+
   useEffect(() => {
     fetch("/api/auth/me")
       .then((res) => res.json())
@@ -48,7 +54,32 @@ export default function DashboardLayout({
         if (data.success) setUser(data.data);
       })
       .catch(() => {});
-  }, []);
+
+    // Initial heartbeat
+    sendHeartbeat();
+
+    // Send heartbeat every 60 seconds
+    const heartbeatInterval = setInterval(sendHeartbeat, 60_000);
+
+    // Also send heartbeat on user interaction (throttled)
+    let lastInteraction = 0;
+    const handleInteraction = () => {
+      const now = Date.now();
+      if (now - lastInteraction > 30_000) {
+        lastInteraction = now;
+        sendHeartbeat();
+      }
+    };
+
+    window.addEventListener("click", handleInteraction);
+    window.addEventListener("keydown", handleInteraction);
+
+    return () => {
+      clearInterval(heartbeatInterval);
+      window.removeEventListener("click", handleInteraction);
+      window.removeEventListener("keydown", handleInteraction);
+    };
+  }, [sendHeartbeat]);
 
   async function handleLogout() {
     await fetch("/api/auth/logout", { method: "POST" });
@@ -149,7 +180,7 @@ export default function DashboardLayout({
         <div className="p-3 border-t border-border/50">
           {user && (
             <div className="flex items-center gap-3 px-3 py-2 mb-2">
-              <Avatar name={user.name} size="sm" />
+              <Avatar name={user.name} size="sm" status="online" />
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium truncate">{user.name}</p>
                 <p className="text-xs text-muted-foreground truncate">
@@ -198,6 +229,7 @@ export default function DashboardLayout({
         {/* Page content */}
         <main className="flex-1 overflow-y-auto p-6 lg:p-8">{children}</main>
       </div>
+      <CommandMenu />
     </div>
   );
 }

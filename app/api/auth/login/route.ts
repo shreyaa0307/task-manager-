@@ -39,8 +39,12 @@ export async function POST(request: Request) {
       return jsonError("Invalid email or password", 401);
     }
 
-    // Create session
+    // Create session & mark as active
     await createSession(user.id);
+    await db
+      .update(users)
+      .set({ lastActiveAt: new Date() })
+      .where(eq(users.id, user.id));
 
     return jsonSuccess({
       id: user.id,

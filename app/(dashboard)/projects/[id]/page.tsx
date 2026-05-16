@@ -20,6 +20,8 @@ import Modal from "@/components/ui/Modal";
 import Badge, { getStatusBadge, getPriorityBadge } from "@/components/ui/Badge";
 import Avatar from "@/components/ui/Avatar";
 import Link from "next/link";
+import { KanbanBoard } from "@/components/KanbanBoard";
+import { toast } from "sonner";
 
 interface Task {
   id: string;
@@ -96,6 +98,7 @@ export default function ProjectDetailPage({
   // Filter state
   const [statusFilter, setStatusFilter] = useState("all");
   const [tab, setTab] = useState<"tasks" | "members">("tasks");
+  const [taskView, setTaskView] = useState<"list" | "board">("list");
 
   useEffect(() => {
     fetchProject();
@@ -166,8 +169,10 @@ export default function ProjectDetailPage({
       setTaskAssignee("");
       setTaskDueDate("");
       fetchProject();
+      toast.success("Task created successfully!");
     } catch {
       setTaskError("Something went wrong");
+      toast.error("Failed to create task");
     } finally {
       setCreatingTask(false);
     }
@@ -225,7 +230,10 @@ export default function ProjectDetailPage({
         body: JSON.stringify({ status: newStatus }),
       });
       fetchProject();
-    } catch {}
+      toast.success("Task status updated!");
+    } catch {
+      toast.error("Failed to update status");
+    }
   }
 
   async function handleDeleteTask(taskId: string) {
@@ -431,13 +439,35 @@ export default function ProjectDetailPage({
                 </button>
               ))}
             </div>
-            {/* Only admins can create tasks */}
-            {isAdmin && (
-              <Button size="sm" onClick={() => setShowCreateTask(true)}>
-                <Plus className="h-4 w-4" />
-                Add Task
-              </Button>
-            )}
+
+            <div className="flex items-center gap-2 ml-auto">
+              <div className="flex items-center bg-secondary/50 rounded-lg p-1">
+                <button
+                  onClick={() => setTaskView("list")}
+                  className={`px-3 py-1 text-xs font-medium rounded-md transition-all ${
+                    taskView === "list" ? "bg-background shadow-sm" : "text-muted-foreground"
+                  }`}
+                >
+                  List
+                </button>
+                <button
+                  onClick={() => setTaskView("board")}
+                  className={`px-3 py-1 text-xs font-medium rounded-md transition-all ${
+                    taskView === "board" ? "bg-background shadow-sm" : "text-muted-foreground"
+                  }`}
+                >
+                  Board
+                </button>
+              </div>
+              
+              {/* Only admins can create tasks */}
+              {isAdmin && (
+                <Button size="sm" onClick={() => setShowCreateTask(true)}>
+                  <Plus className="h-4 w-4" />
+                  Add Task
+                </Button>
+              )}
+            </div>
           </div>
 
           {filteredTasks.length === 0 ? (
@@ -449,6 +479,8 @@ export default function ProjectDetailPage({
                   : "No tasks with this status."}
               </p>
             </div>
+          ) : taskView === "board" ? (
+            <KanbanBoard tasks={filteredTasks} onStatusChange={handleUpdateTaskStatus} onTaskClick={openEditModal} />
           ) : (
             <div className="space-y-2">
               {filteredTasks

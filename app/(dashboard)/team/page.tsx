@@ -6,7 +6,7 @@ import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Modal from "@/components/ui/Modal";
 import Badge from "@/components/ui/Badge";
-import Avatar from "@/components/ui/Avatar";
+import Avatar, { getActiveStatus } from "@/components/ui/Avatar";
 import { useRouter } from "next/navigation";
 
 interface User {
@@ -15,6 +15,7 @@ interface User {
   email: string;
   role: "admin" | "member";
   createdAt: string;
+  lastActiveAt: string | null;
 }
 
 export default function TeamPage() {
@@ -34,6 +35,10 @@ export default function TeamPage() {
   useEffect(() => {
     fetchUsers();
     fetchMe();
+
+    // Auto-refresh active status every 30 seconds
+    const statusInterval = setInterval(fetchUsers, 30_000);
+    return () => clearInterval(statusInterval);
   }, []);
 
   async function fetchMe() {
@@ -157,8 +162,17 @@ export default function TeamPage() {
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
-        <div className="text-sm text-muted-foreground ml-auto pr-2">
-          {filteredUsers.length} total users
+        <div className="flex items-center gap-3 ml-auto pr-2">
+          <div className="flex items-center gap-1.5 text-sm text-emerald-500">
+            <span className="h-2 w-2 rounded-full bg-emerald-500 status-online" />
+            <span className="font-medium">
+              {filteredUsers.filter(u => getActiveStatus(u.lastActiveAt) === "online").length} online
+            </span>
+          </div>
+          <span className="text-border">•</span>
+          <div className="text-sm text-muted-foreground">
+            {filteredUsers.length} total
+          </div>
         </div>
       </div>
 
@@ -174,7 +188,7 @@ export default function TeamPage() {
             style={{ animationDelay: `${i * 0.05}s` }}
           >
             <div className="flex items-start justify-between mb-4">
-              <Avatar name={user.name} size="lg" />
+              <Avatar name={user.name} size="lg" status={getActiveStatus(user.lastActiveAt)} />
               {user.id !== currentUserId && (
                 <button
                   onClick={() => handleDelete(user.id)}
@@ -191,6 +205,21 @@ export default function TeamPage() {
               <p className="text-sm text-muted-foreground truncate">
                 {user.email}
               </p>
+              {(() => {
+                const status = getActiveStatus(user.lastActiveAt);
+                const statusConfig = {
+                  online: { label: "Online now", color: "text-emerald-500", dot: "bg-emerald-500" },
+                  away: { label: "Away", color: "text-amber-500", dot: "bg-amber-400" },
+                  offline: { label: "Offline", color: "text-gray-400", dot: "bg-gray-400" },
+                };
+                const cfg = statusConfig[status];
+                return (
+                  <div className={`flex items-center gap-1.5 mt-1.5 ${cfg.color}`}>
+                    <span className={`h-2 w-2 rounded-full ${cfg.dot} ${status === "online" ? "status-online" : ""}`} />
+                    <span className="text-xs font-medium">{cfg.label}</span>
+                  </div>
+                );
+              })()}
             </div>
 
             <div className="flex items-center justify-between mt-auto pt-4 border-t border-border/50">

@@ -1,20 +1,21 @@
-#  TaskFlow 
+# TaskFlow 
 
+![TaskFlow Header](https://via.placeholder.com/1200x400/1e1432/A66CFF?text=TaskFlow+-+Premium+Project+Management)
 
-> **Manage projects, assign tasks, track progress, and collaborate with your team — all in one beautiful, ethereal workspace.**
+> **Manage projects, assign tasks, track progress, and collaborate with your team all in one beautiful, ethereal workspace.**
 
 TaskFlow is a modern, full-stack project management application engineered to streamline team productivity. Built with a stunning **Premium Ethereal Glassmorphism** aesthetic, it features beautiful soft glows, translucent floating cards, and animated aurora backgrounds that react dynamically to both light and dark modes.
 
 ---
 
-## 🚀 Core Features
+##  Core Features
 
-- **🛡️ Role-Based Access Control (RBAC):** Strict separation between `Admin` and `Member` roles. Only Admins can invite team members and manage workspaces.
-- **📊 Interactive Analytics Dashboard:** Real-time visualizations of project progress and task status distributions using dynamic pie and bar charts.
-- **✅ Granular Task Tracking:** Create projects, assign tasks to specific team members, set priorities, and track deadlines.
-- **👥 Team Management UI:** Admins have a dedicated interface to manage their organization's members, handling onboarding and offboarding securely.
-- **🌗 Ethereal Dark/Light Mode:** A fully integrated theme toggler that gracefully transitions the entire pastel color palette and glassmorphism shadows.
-- **⚡ Blazing Fast Next.js 16:** Built on the bleeding edge App Router with server actions and instantaneous UI updates.
+- **Role-Based Access Control (RBAC):** Strict separation between `Admin` and `Member` roles. Only Admins can invite team members and manage workspaces.
+- **Interactive Analytics Dashboard:** Real-time visualizations of project progress and task status distributions using dynamic pie and bar charts.
+- **Granular Task Tracking:** Create projects, assign tasks to specific team members, set priorities, and track deadlines.
+- **Team Management UI:** Admins have a dedicated interface to manage their organization's members, handling onboarding and offboarding securely.
+- **Ethereal Dark/Light Mode:** A fully integrated theme toggler that gracefully transitions the entire pastel color palette and glassmorphism shadows.
+- **Blazing Fast Next.js 16:** Built on the bleeding edge App Router with server actions and instantaneous UI updates.
 
 ## 🛠️ Technology Stack
 
@@ -38,7 +39,7 @@ This application uses a highly customized **Ethereal Glassmorphism** design syst
 
 ---
 
-## ⚙️ Local Development Setup
+## Local Development Setup
 
 To run TaskFlow locally, follow these steps:
 
@@ -87,4 +88,3 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - **Member Login:** Members cannot sign up. They must be added by an Admin via the Dashboard's **Team** page. They will log in using the credentials provided by the Admin.
 
 ---
-
