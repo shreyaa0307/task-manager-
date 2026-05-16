@@ -79,7 +79,7 @@ npm run db:seed
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [https://task-manager-production-b55e.up.railway.app/] with your browser to see the result.
 
 ---
 
